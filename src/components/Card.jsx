@@ -5,15 +5,26 @@ function Card({ heroi }) {
   const [xp, setXp] = useState(0);
   const [nivel, setNivel] = useState(0);
 
+  function mostrarLevelUp() {
+  const msg = document.getElementById("levelUpMsg");
+  msg.style.display = "block";
+
+  setTimeout(() => {
+    msg.style.display = "none";
+  }, 1000);
+}
+
   let cor = "border-gray-300";
 
-  if (xp === 110) {
-    setNivel(nivel + 1);
-    setXp(10);
-    alert(`${heroi.nome} subiu de nível!`);
+  if (xp === 100) {
+    setTimeout(() => {
+      setNivel(nivel + 1);
+      mostrarLevelUp();
+      setXp(0);
+    }, 100); // Sabe quando você ta dormindo e do nada vem a solução do código? Foi isso que aconteceu...
   }
 
-  if (xp === 100) {
+  if (nivel >= 5) {
     cor = "border-amber-400";
   }
 
@@ -23,6 +34,9 @@ function Card({ heroi }) {
     >
       <div className="flex justify-center mb-4">
         <StatusBadge tipo={heroi.status} />
+      </div>
+      <div id="levelUpMsg" style={{ position: "fixed", top: "20px", left: "50%", transform: "translateX(-50%)", background: "#222", color: "#fff", padding: "10px 20px", borderRadius: "8px", display: "none" }}>
+        {heroi.nome} teve um Level Up! {/* mudar o nome depois */}    
       </div>
       <div>Nível: {nivel}</div>
       <img
