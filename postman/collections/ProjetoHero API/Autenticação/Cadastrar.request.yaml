@@ -1,0 +1,17 @@
+$kind: http-request
+name: Cadastrar
+method: POST
+url: 'http://localhost:3000/cadastrar'
+order: 2000
+description: 'Cadastra um novo usuário. Retorna os dados do usuário criado em caso de sucesso.'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nome": "{{nome}}",
+      "email": "{{email}}",
+      "senha": "{{senha}}"
+    }

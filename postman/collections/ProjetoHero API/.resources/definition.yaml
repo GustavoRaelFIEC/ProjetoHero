@@ -1,0 +1,3 @@
+$kind: collection
+name: ProjetoHero API
+description: 'Coleção de endpoints da API ProjetoHero, rodando em http://localhost:3000'

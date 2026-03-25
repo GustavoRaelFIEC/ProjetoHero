@@ -1,0 +1,3 @@
+$kind: collection
+name: 'Autenticação'
+description: Endpoints de autenticação e cadastro de usuários
