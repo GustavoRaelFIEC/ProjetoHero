@@ -26,9 +26,9 @@ db.connect((error) => {
 
 // defininco o Schema (Contrato)
 const CadastroSchema = z.object({
-    nome: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
-    email: z.string().email({ message: "faz o email certo!", }), // coerce para definir qual deve ser o tipo de entrada, nesse caso deve ser um numero!
-    senha: z.string().min(8, "precisa ser 8 cracteres sua anta"),
+    nome: z.string().min(3, { message: "O nome deve ter pelo menos 3 caracteres." }),
+    email: z.string().email({ message: "O e-mail deve conter o '@' e o '.com' por exemplo.", }), // coerce para definir qual deve ser o tipo de entrada, nesse caso deve ser um numero!
+    senha: z.string().min(8, { message: "A senha deve ter no mínimo 8 dígitos" }),
 });
 
 // Função para testar a validação
