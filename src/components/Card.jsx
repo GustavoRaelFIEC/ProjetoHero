@@ -80,6 +80,14 @@ function Card({ heroi }) {
       >
         Recrutar!
       </button>
+
+      <button
+        className="m-2.5 bg-blue-600 text-white py-2 px-4 rounded"
+        onClick={() => console.log("ola") 
+        }
+      >
+        Excluir!
+      </button>
     </div>
   );
 }

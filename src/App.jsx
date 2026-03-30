@@ -2,6 +2,7 @@ import Card from "./components/Card.jsx";
 import Login from "./components/Login.jsx";
 import Cadastro from "./components/Cadastrar.jsx";
 import StatusBadge from "./components/StatusBadge.jsx";
+import Formulario from "./components/Formulario.jsx";
 
 import Inicio from "./assets/avatar/arqueira.png";
 import Meio from "./assets/avatar/guerreiro.png";
@@ -54,6 +55,7 @@ function App() {
           ))}
         </div>
       </div>
+      <Formulario/>
     </>
   );
 }
