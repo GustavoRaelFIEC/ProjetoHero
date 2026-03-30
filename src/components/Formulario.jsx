@@ -1,11 +1,33 @@
 import { useState } from "react";
+import { z } from "zod";
 
 function Formulario() {
   const [nome, setNome] = useState("");
   const [classe, setClasse] = useState("");
 
+  const cadastroHeroiSchema = z.object({
+    nome: z.string().min(2, "O nome do seu personagem deve ter mais de 1 caracteres"),
+    classe: z.string().min(1, "A classe do seu personagem deve ter mais de 1 caracteres")
+  });
+
+  function validarCadastroheroi(dados){
+    const resultado = cadastroHeroiSchema.safeParse(dados);
+
+    if (resultado.success) {
+      console.log("Cadastro realizado com sucesso!");
+    }else{
+      console.error("❌ Erro na validação!");
+
+      const errosFormatados = resultado.error.format();
+      console.log(JSON.stringify(errosFormatados, null, 2));
+    }
+  }
+
   function handleSubmit(e) {
-    e.prevenDefault();
+    e.preventDefault();
+
+    validarCadastroheroi({ nome, classe });
+
     console.log(`Nome: ${nome} | Classe: ${classe}`);
 
     setClasse("");
@@ -13,13 +35,13 @@ function Formulario() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+    <div className="min-h-screen flex items-center justify-center p-6">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md space-y-5"
       >
         <legend className="text-2xl font-bold text-gray-800 text-center mb-4">
-          Formulário
+          Cadastrando Personagem
         </legend>
 
         <div className="flex flex-col">

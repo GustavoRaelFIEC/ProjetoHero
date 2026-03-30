@@ -7,6 +7,6 @@ import Formulario from './components/Formulario.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Formulario />
+    <App />
   </StrictMode>
 )
