@@ -8,8 +8,10 @@ import Inicio from "./assets/avatar/arqueira.png";
 import Meio from "./assets/avatar/guerreiro.png";
 import Final from "./assets/avatar/mage.png";
 
+import { useState } from "react"
+
 function App() {
-  const listaHerois = [
+  const [listaHerois, setListaHerois] = useState([
     {
       id: 1,
       nome: "Guerreiro",
@@ -17,7 +19,6 @@ function App() {
       imagem: Meio,
       status: "online",
     },
-
     {
       id: 2,
       nome: "Arqueiro",
@@ -25,7 +26,6 @@ function App() {
       imagem: Inicio,
       status: "ausente",
     },
-
     {
       id: 3,
       nome: "Mago",
@@ -33,7 +33,11 @@ function App() {
       imagem: Final,
       status: "offline",
     },
-  ];
+  ]);
+
+  function excluirHero(id) {
+    setListaHerois((prev) => prev.filter((h) => h.id !== id));
+  }
 
   const containerStyle = {
     display: "flex",
@@ -51,11 +55,11 @@ function App() {
         <h1>Recrute seu time</h1>
         <div style={containerStyle}>
           {listaHerois.map((heroi) => (
-            <Card key={heroi.id} heroi={heroi} />
+            <Card key={heroi.id} heroi={heroi} excluirHero={excluirHero} />
           ))}
         </div>
       </div>
-      <Formulario/>
+      <Formulario />
     </>
   );
 }

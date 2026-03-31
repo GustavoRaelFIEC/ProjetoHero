@@ -1,10 +1,11 @@
 import { useState } from "react";
 import StatusBadge from "./StatusBadge";
 
-function Card({ heroi }) {
+function Card({ heroi, excluirHero }) {
   const [xp, setXp] = useState(0);
   const [nivel, setNivel] = useState(0);
   const [mostrarMsg, setMostrarMsg] = useState(false);
+  const [cor, setCor] = useState("border-gray-300");
 
   function mostrarLevelUp() {
     setMostrarMsg(true);
@@ -14,16 +15,24 @@ function Card({ heroi }) {
     }, 1000);
   }
 
-  let cor = "border-gray-300";
+  function ganharXp(valor) {
+    setXp((prevXp) => {
+      let novoXp = prevXp + valor;
 
-  if (xp === 100) {
-    cor = "border-amber-400";
+      if (novoXp >= 100) {
+        setNivel((prevNivel) => prevNivel + 1);
+        mostrarLevelUp();
+        setCor("border-amber-400");
 
-    setTimeout(() => {
-      setNivel(nivel + 1);
-      mostrarLevelUp();
-      setXp(0);
-    }, 100);
+        setTimeout(() => {
+          setCor("border-gray-300");
+        }, 150);
+
+        return novoXp - 100;
+      }
+
+      return novoXp;
+    });
   }
 
   return (
@@ -66,8 +75,8 @@ function Card({ heroi }) {
       </div>
 
       <button
-        className="m-2.5 bg-blue-600 text-white py-2 px-4 rounded"
-        onClick={() => setXp(xp + 10)}
+        className="cursor-pointer m-2.5 bg-blue-600 text-white py-2 px-4 rounded"
+        onClick={() => ganharXp(10)}
       >
         +10 XP
       </button>
@@ -75,16 +84,15 @@ function Card({ heroi }) {
       <div>XP: {xp}/100</div>
 
       <button
-        className="m-2.5 bg-blue-600 text-white py-2 px-4 rounded"
+        className="cursor-pointer m-2.5 bg-blue-600 text-white py-2 px-4 rounded"
         onClick={() => alert(`Você recrutou ${heroi.nome} para o seu time!`)}
       >
         Recrutar!
       </button>
 
       <button
-        className="m-2.5 bg-blue-600 text-white py-2 px-4 rounded"
-        onClick={() => console.log("ola") 
-        }
+        className="cursor-pointer m-2.5 bg-blue-600 text-white py-2 px-4 rounded"
+        onClick={() => excluirHero(heroi.id)}
       >
         Excluir!
       </button>
