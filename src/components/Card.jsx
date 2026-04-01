@@ -31,7 +31,7 @@ function Card({ heroi, excluirHero }) {
       let novoXp = prevXp + valor;
 
       if (novoXp >= 100) {
-        setNivel((prevNivel) => prevNivel + 1);
+        setNivel((prevNivel) => prevNivel + 0.5);
         mostrarLevelUp();
         setCor("border-amber-400");
 
