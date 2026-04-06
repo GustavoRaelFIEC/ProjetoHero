@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { z } from "zod";
 
-function Formulario() {
+function Formulario({onAdicionarHeroi}) {
   const [nome, setNome] = useState("");
   const [classe, setClasse] = useState("");
 
   const cadastroHeroiSchema = z.object({
-    nome: z.string().min(2, "O nome do seu personagem deve ter mais de 1 caracteres"),
-    classe: z.string().min(1, "A classe do seu personagem deve ter mais de 1 caracteres")
+    nome: z
+      .string()
+      .min(2, "O nome do seu personagem deve ter mais de 1 caracteres"),
+    classe: z
+      .string()
+      .min(1, "A classe do seu personagem deve ter mais de 1 caracteres"),
   });
 
-  function validarCadastroheroi(dados){
+  function validarCadastroheroi(dados) {
     const resultado = cadastroHeroiSchema.safeParse(dados);
 
     if (resultado.success) {
       console.log("Cadastro realizado com sucesso!");
-    }else{
+    } else {
       console.error("❌ Erro na validação!");
 
       const errosFormatados = resultado.error.format();
@@ -30,6 +34,17 @@ function Formulario() {
 
     console.log(`Nome: ${nome} | Classe: ${classe}`);
 
+    if (!nome || !classe) return;
+
+    const novoHeroi = {
+      id: Date.now() + Math.random(),
+      nome,
+      classe,
+      imagem: null,
+      status: "online",
+    };
+    console.log("Novo herói:", novoHeroi);
+    onAdicionarHeroi(novoHeroi);
     setClasse("");
     setNome("");
   }
@@ -70,7 +85,7 @@ function Formulario() {
           type="submit"
           className=" cursor-pointer w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition"
         >
-          Enviar
+          Adicionar Heroi
         </button>
 
         <h2 className="text-lg font-semibold text-gray-800 text-center pt-4">

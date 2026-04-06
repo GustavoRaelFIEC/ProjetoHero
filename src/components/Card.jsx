@@ -18,17 +18,30 @@ function Card({ heroi, excluirHero }) {
   function ganharXp(valor) {
     setXp((prevXp) => {
       let novoXp = prevXp + valor;
+      let niveisSubidos = 0;
+      let xpRestante = novoXp;
 
-      if (novoXp >= 100) {
-        setNivel((prevNivel) => prevNivel + 0.5);
-        mostrarLevelUp();
+      // Calcula quantos levels vai subir e XP restante
+      while (xpRestante >= 100) {
+        xpRestante -= 100;
+        niveisSubidos++;
+      }
+
+      if (niveisSubidos > 0) {
+        // 1º: Anima até 100 (efeito visual)
         setCor("border-amber-400");
 
         setTimeout(() => {
+          // 2º: Atualiza nível e reseta XP
+          setNivel(nivel + niveisSubidos);
+          mostrarLevelUp(niveisSubidos);
+
           setCor("border-gray-300");
+          setXp(xpRestante); // XP restante (0-99)
         }, 150);
 
-        return novoXp - 100;
+        // Durante a animação, mostra 100 na barra
+        return 100;
       }
 
       return novoXp;
@@ -69,7 +82,7 @@ function Card({ heroi, excluirHero }) {
 
       <div className="w-full h-2.5 rounded bg-gray-600">
         <div
-          className="h-2.5 rounded bg-green-600 transition-all duration-300"
+          className="h-2.5 rounded bg-green-600 transition-all duration-100"
           style={{ width: `${xp}%` }}
         ></div>
       </div>

@@ -104,5 +104,5 @@ app.get('/usuarios/:id', (req, res) => {
 });
       
 app.listen(3000, () => {
-    console.log('Deu certo');
+    console.log('Servidor rodando na porta 3000');
 })

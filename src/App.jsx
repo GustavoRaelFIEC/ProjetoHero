@@ -8,36 +8,51 @@ import Inicio from "./assets/avatar/arqueira.png";
 import Meio from "./assets/avatar/guerreiro.png";
 import Final from "./assets/avatar/mage.png";
 
-import { useState } from "react"
+import { useState, useEffect } from "react";
 
 function App() {
-  const [listaHerois, setListaHerois] = useState([
-    {
-      id: 1,
-      nome: "Guerreiro",
-      classe: "Meio",
-      imagem: Meio,
-      status: "online",
-    },
-    {
-      id: 2,
-      nome: "Arqueiro",
-      classe: "Início",
-      imagem: Inicio,
-      status: "ausente",
-    },
-    {
-      id: 3,
-      nome: "Mago",
-      classe: "Final",
-      imagem: Final,
-      status: "offline",
-    },
-  ]);
+  const [Herois, setHerois] = useState(() => {
+    try {
+      const heroisSalvos = localStorage.getItem('Herois');
+      return heroisSalvos ? JSON.parse(heroisSalvos) : [
+        {
+          id: 1,
+          nome: "Guerreiro",
+          classe: "Meio",
+          imagem: Meio,
+          status: "online",
+        },
+        {
+          id: 2,
+          nome: "Arqueiro",
+          classe: "Início",
+          imagem: Inicio,
+          status: "ausente",
+        },
+        {
+          id: 3,
+          nome: "Mago",
+          classe: "Final",
+          imagem: Final,
+          status: "offline",
+        },
+      ];
+    } catch {
+      return [];
+    }
+  });
 
-  function excluirHero(id) {
-    setListaHerois((prev) => prev.filter((h) => h.id !== id));
-  }
+  useEffect(() => {
+    localStorage.setItem('Herois', JSON.stringify(Herois));
+  }, [Herois]);
+
+  const adicionarHeroi = (novoHeroi) => {
+    setHerois(prev => [...prev, novoHeroi]);
+  };
+
+  const excluirHero = (id) => {
+    setHerois(prev => prev.filter(heroi => heroi.id !== id));
+  };
 
   const containerStyle = {
     display: "flex",
@@ -54,12 +69,12 @@ function App() {
       <div style={{ textAlign: "center" }}>
         <h1>Recrute seu time</h1>
         <div style={containerStyle}>
-          {listaHerois.map((heroi) => (
+          {Herois.map((heroi) => (
             <Card key={heroi.id} heroi={heroi} excluirHero={excluirHero} />
           ))}
         </div>
       </div>
-      <Formulario />
+      <Formulario onAdicionarHeroi={adicionarHeroi} />
     </>
   );
 }
