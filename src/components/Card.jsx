@@ -6,6 +6,7 @@ function Card({ heroi, excluirHero }) {
   const [nivel, setNivel] = useState(0);
   const [mostrarMsg, setMostrarMsg] = useState(false);
   const [cor, setCor] = useState("border-gray-300");
+  const [selecionado, setSelecionado] = useState(false);
 
   function mostrarLevelUp() {
     setMostrarMsg(true);
@@ -13,6 +14,16 @@ function Card({ heroi, excluirHero }) {
     setTimeout(() => {
       setMostrarMsg(false);
     }, 1000);
+  }
+
+  function toogleBorder() {
+    if (!selecionado) {
+      setSelecionado(true);
+      setCor("border-blue-400");
+    } else {
+      setSelecionado(false);
+      setCor("border-gray-300");
+    }
   }
 
   function ganharXp(valor) {
@@ -50,6 +61,9 @@ function Card({ heroi, excluirHero }) {
 
   return (
     <div
+      onClick={() => {
+        toogleBorder();
+      }}
       className={`border-4 ${cor} rounded-xl p-4 m-2.5 shadow-md text-center w-50`}
     >
       <div className="flex justify-center mb-4">
@@ -66,19 +80,20 @@ function Card({ heroi, excluirHero }) {
             color: "#fff",
             padding: "10px 20px",
             borderRadius: "8px",
+            cursor: "context-menu",
           }}
         >
           {heroi.nome} teve um Level Up!
         </div>
       )}
-      <div>Nível: {nivel}</div>
+      <div className="cursor-context-menu">Nível: {nivel}</div>
       <img
         src={heroi.imagem}
         alt={heroi.nome}
         style={{ width: "100%", borderRadius: "8px" }}
       />
-      <h2>{heroi.nome}</h2>
-      <p>Classe: {heroi.classe}</p>
+      <h2 className="cursor-context-menu">{heroi.nome}</h2>
+      <p className="cursor-context-menu">Classe: {heroi.classe}</p>
 
       <div className="w-full h-2.5 rounded bg-gray-600">
         <div
@@ -89,23 +104,26 @@ function Card({ heroi, excluirHero }) {
 
       <button
         className="cursor-pointer m-2.5 bg-blue-600 text-white py-2 px-4 rounded"
-        onClick={() => ganharXp(10)}
+        onClick={(e) => ganharXp(10) & e.stopPropagation()}
       >
         +10 XP
       </button>
 
-      <div>XP: {xp}/100</div>
+      <div className="cursor-context-menu">XP: {xp}/100</div>
 
       <button
         className="cursor-pointer m-2.5 bg-blue-600 text-white py-2 px-4 rounded"
-        onClick={() => alert(`Você recrutou ${heroi.nome} para o seu time!`)}
+        onClick={(e) =>
+          alert(`Você recrutou ${heroi.nome} para o seu time!`) &
+          e.stopPropagation()
+        }
       >
         Recrutar!
       </button>
 
       <button
         className="cursor-pointer m-2.5 bg-blue-600 text-white py-2 px-4 rounded"
-        onClick={() => excluirHero(heroi.id)}
+        onClick={(e) => excluirHero(heroi.id) & e.stopPropagation()}
       >
         Excluir!
       </button>
