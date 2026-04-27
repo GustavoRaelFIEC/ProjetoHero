@@ -64,7 +64,7 @@ function Card({ heroi, excluirHero }) {
       onClick={() => {
         toogleBorder();
       }}
-      className={`border-4 ${cor} rounded-xl p-4 m-2.5 shadow-md text-center w-50`}
+      className={`border-4 ${cor} rounded-xl p-4 m-2.5 shadow-md text-center w-50 `}
     >
       <div className="flex justify-center mb-4">
         <StatusBadge tipo={heroi.status} />
